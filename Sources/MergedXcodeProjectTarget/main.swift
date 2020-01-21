@@ -73,7 +73,7 @@ func main() {
             if destinationFiles.contains(where: { $0.id == sourceFile.id }) {
                 return
             }
-            if !destinationFiles.contains(where: { filePathOrName(fileRef: $0.fileRef).hasSuffix(fileExtension) }) {
+            if !filePathOrName(fileRef: sourceFile.fileRef).hasSuffix(fileExtension) {
                 return
             }
             if destinationFiles.contains(where: { ignoreFiles.contains(filePathOrName(fileRef: $0.fileRef)) }) {
