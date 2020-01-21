@@ -35,7 +35,7 @@ func main() {
     let xcodeProjectUrl = ProcessInfo.processInfo.environment["MERGED_XCODE_PROJECT_TARGET_PATH"] ?? extractArgument(key: "--project")
     do {
         let project = try XcodeProject(
-            xcodeprojectURL: URL(fileURLWithPath: xcodeProjectUrl)
+            xcodeprojectURL: URL(string: "file://" + xcodeProjectUrl)!
         )
 
         let sourceTargetName = extractArgument(key: "--from")
