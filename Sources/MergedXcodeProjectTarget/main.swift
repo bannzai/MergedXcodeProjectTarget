@@ -60,10 +60,11 @@ func main() {
             fatalError("Can not find \(destinationTargetName)")
         }
         
-        let sourceFiles = sourceTarget.buildPhases.flatMap { $0.files }
-        let destinationFiles = destinationTarget.buildPhases.flatMap { $0.files }
         
-        func filePathOrName(fileRef: PBX.Reference) -> String {
+        let sourceFiles = sourceTarget.context.fileRefs
+        let destinationFiles = destinationTarget.context.fileRefs
+        
+        func filePathOrName(fileRef: PBX.FileReference) -> String {
             return fileRef.path ?? fileRef.name!
         }
         let fileExtension = extractArgument(key: "extension") ?? ".swift"
@@ -72,13 +73,13 @@ func main() {
             if destinationFiles.contains(where: { $0.id == sourceFile.id }) {
                 return
             }
-            if !destinationFiles.contains(where: { filePathOrName(fileRef: $0.fileRef).hasSuffix(fileExtension) }) {
+            if !destinationFiles.contains(where: { filePathOrName(fileRef: $0).hasSuffix(fileExtension) }) {
                 return
             }
-            if destinationFiles.contains(where: { ignoreFiles.contains(filePathOrName(fileRef: $0.fileRef)) }) {
+            if destinationFiles.contains(where: { ignoreFiles.contains(filePathOrName(fileRef: $0)) }) {
                 return
             }
-            project.appendFile(path: filePathOrName(fileRef: sourceFile.fileRef), targetName: destinationTargetName)
+            project.appendFile(path: filePathOrName(fileRef: sourceFile), targetName: destinationTargetName)
         }
         try project.write()
     } catch {
