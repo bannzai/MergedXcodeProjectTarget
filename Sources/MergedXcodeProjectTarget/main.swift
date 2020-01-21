@@ -11,7 +11,7 @@ mxpt merge      Execute merge from source target to destination target.
 }
 
 func extractArgument(key: String) -> String {
-    let indices = ProcessInfo.processInfo.arguments.indices
+    let indices = ProcessInfo.processInfo.arguments[1...].indices
     for index in indices {
         let optionName = ProcessInfo.processInfo.arguments[index]
         if optionName == key {
@@ -22,7 +22,7 @@ func extractArgument(key: String) -> String {
 }
 
 func main() {
-    let subcommand = ProcessInfo.processInfo.arguments[0]
+    let subcommand = ProcessInfo.processInfo.arguments[1]
     switch subcommand {
     case "help":
         return usage()
