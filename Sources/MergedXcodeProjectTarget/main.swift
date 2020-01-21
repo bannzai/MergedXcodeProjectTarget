@@ -54,7 +54,7 @@ func main() {
             if destinationFiles.contains(where: { $0.id == sourceFile.id }) {
                 return
             }
-            destinationTarget.appendToSourceBuildFile(fileName: sourceFile.fileRef.path ?? sourceFile.fileRef.name!)
+            project.appendFile(path: sourceFile.fileRef.path ?? sourceFile.fileRef.name!, targetName: destinationTargetName)
         }
         try project.write()
     } catch {
